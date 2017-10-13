@@ -1,12 +1,15 @@
 package main.app.role;
 
+import main.app.team.EvilTeam;
+import main.app.team.GoodTeam;
+
 public class Witch extends Player implements NightOwl{
 
 	private int cureCount = 1;
 	private int poisonCount = 1;
 	
-	public Witch(int number) {
-		super(number);
+	public Witch(int number, GoodTeam goodTeam) {
+		super(number, goodTeam);
 		this.setRole(Role.WITCH);
 	}
 	

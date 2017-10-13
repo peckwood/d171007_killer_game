@@ -1,5 +1,7 @@
 package main.app.role;
 
+import main.app.team.GoodTeam;
+
 public class Seer extends Player implements NightOwl{
 	
 	@Override
@@ -7,8 +9,8 @@ public class Seer extends Player implements NightOwl{
 		
 	}
 
-	public Seer(int number) {
-		super(number);
+	public Seer(int number, GoodTeam goodTeam) {
+		super(number, goodTeam);
 		this.setRole(Role.SEER);
 	}
 

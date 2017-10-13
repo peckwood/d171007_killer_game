@@ -1,17 +1,22 @@
 package main.app.role;
 
+import main.app.Status;
+import main.app.team.Team;
+
 public class Player {
 	//号码
 	private int number;
 	private String nickname;
 	private Status status = Status.ALIVE;
 	private Role role;
+	private Team team;
 	
 	private Player killedBy;
 	private int roundKilled;
 
-	public Player(int number) {
+	public Player(int number, Team team) {
 		this.number = number;
+		this.team = team;
 	}
 	
 	public int getNumber() {
@@ -52,6 +57,14 @@ public class Player {
 	
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	public Team getTeam() {
+		return team;
+	}
+
+	public void setTeam(Team team) {
+		this.team = team;
 	}
 	
 }

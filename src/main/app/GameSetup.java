@@ -2,10 +2,7 @@ package main.app;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -17,17 +14,19 @@ import main.app.role.Player;
 import main.app.role.Role;
 import main.app.role.Seer;
 import main.app.role.Witch;
+import main.app.team.EvilTeam;
+import main.app.team.GoodTeam;
 
 public class GameSetup {
-	List<Player> players;
-	int totalCount;
-	int seerCount;
-	int killerCount;
-	int guardianCount;
-	int witchCount;
-	int civilianCount;
+	private List<Player> players;
+	private int totalCount;
+	private int seerCount;
+	private int killerCount;
+	private int guardianCount;
+	private int witchCount;
+	private int civilianCount;
 	
-	public void setup(String counterText) {
+	public List<Player> setup(String counterText) {
 		String[] counts = counterText.split(" ");//只支持一个空格
 		totalCount = Integer.valueOf(counts[0]);
 		killerCount = Integer.valueOf(counts[1]);
@@ -61,39 +60,40 @@ public class GameSetup {
 		allRoleList.addAll(Arrays.asList(civilianRoleArray));
 		System.out.println(allRoleList);
 		assignRoles(allRoleList);
-		
-		
-		
+		return players;
 	}
+	
 	private void assignRoles(List<Role> allRoleList) {
-		
 		Random random = new Random();
-		List<Player> playersList = new ArrayList<>();
+		players = new ArrayList<>();
+		EvilTeam evilTeam = new EvilTeam();
+		GoodTeam goodTeam = new GoodTeam();
+		
 		for(int i=0;i<totalCount;i++){
 			int currentPlayerNumber = i+1;
 			int currentRoleIndex= random.nextInt(allRoleList.size());
 			switch(allRoleList.get(currentRoleIndex)){
 			case KILLER:
-				playersList.add(new Killer(currentPlayerNumber));
+				players.add(new Killer(currentPlayerNumber, evilTeam));
 				break;
 			case SEER:
-				playersList.add(new Seer(currentPlayerNumber));
+				players.add(new Seer(currentPlayerNumber, goodTeam));
 				break;
 			case WITCH:
-				playersList.add(new Witch(currentPlayerNumber));
+				players.add(new Witch(currentPlayerNumber, goodTeam));
 				break;
 			case GUARDIAN:
-				playersList.add(new Guardian(currentPlayerNumber));
+				players.add(new Guardian(currentPlayerNumber, goodTeam));
 				break;
 			case CIVILIAN:
-				playersList.add(new Civilian(currentPlayerNumber));
+				players.add(new Civilian(currentPlayerNumber, goodTeam));
 				break;
 			}
 			allRoleList.remove(currentRoleIndex);
 		}
-		System.out.println(playersList);
-		
+		System.out.println(players);
 	}
+	
 	@Override
 	public String toString() {
 		return "GameSetup [players=" + players + ", totalCount=" + totalCount + ", seerCount=" + seerCount
